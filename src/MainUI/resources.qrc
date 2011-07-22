@@ -1,0 +1,26 @@
+<RCC>
+<qresource>
+    
+    <file>images/background/panel.png</file>
+    <file>images/background/toolbar_new.png</file>
+    <file>images/background/menubar.png</file>
+    
+    <file>images/icons/magnifier1.png</file>
+    <file>images/icons/magnifier2.png</file>
+    <file>images/icons/lovedIcon.png</file>
+    
+    <file>images/icons/Draw_Rectangle.png</file>
+    <file>images/icons/Draw_ArrowLine.png</file>
+    <file>images/icons/Draw_BlackArrow.png</file>
+    <file>images/icons/Draw_Polygen.png</file>
+    <file>images/icons/Draw_UserPolygen.png</file>
+    
+    <file>images/icons/Font_Italic.png</file>
+    
+    <file>images/icons/Char_Vertical.png</file>
+    <file>images/icons/Char_UpLine.png</file>
+    
+    <file>images/icons/Add_Photo.png</file>
+    <file>images/icons/Add_Music.png</file>
+</qresource>
+</RCC>
