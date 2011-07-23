@@ -43,7 +43,7 @@ mainUI::mainUI()
 	QWebSettings::globalSettings()->setAttribute(QWebSettings::PluginsEnabled, true);
 	
 	view = new QWebView(workspace);
-	view -> load(QUrl("swfcontainer.html"));
+	view -> load(QUrl("wkspace/swfcontainer.html"));
 	
 	hub = new Hub(view);  			//New a Hub instance to emit info to DB and AS
 
@@ -74,7 +74,7 @@ void mainUI::myclicked()
 {
 	QString name = sender() -> objectName();
 	QStringList list = name.split("_");
-	hub -> fromToolbar("Draw", "Line");	
+	hub -> ModeCHG("Draw", "Line");	
 }
 
 /*//if cmdLine isn't empty then enable cmdEnter Button

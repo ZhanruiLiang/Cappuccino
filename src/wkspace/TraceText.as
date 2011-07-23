@@ -6,6 +6,7 @@ package{
 			text=str;
 			x=x0;
 			y=y0;
+			width=300;
 		}
 	}
 }

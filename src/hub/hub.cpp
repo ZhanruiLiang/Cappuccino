@@ -22,46 +22,58 @@ Hub::Hub(QWebView *view)
 	this->view = view;
 	this->frame = view->page()->mainFrame();
 }
-void Hub::fromToolbar(QString Action, QString Shape)
+void Hub::ModeCHG(QString Action, QString Shape)
 {
-	qDebug()<<"Success";
 	QDomDocument doc;
 	QDomElement root = doc.createElement("MODE");
 	doc.appendChild(root);
-	root.setAttribute("Action", Action);
+	//root.setAttribute("Action", Action);
+	addAtt(QString("Action"), Action, &root);
 	if(Action == "Draw")
 	{
 		//More Attribute should be set
 		//Access to the DB and get Current settings
 		//The following is just for test and should be modified
-		root.setAttribute("Shape", Shape);
-		root.setAttribute("LineColor", "#000000");//?
-		root.setAttribute("FillColor", "#000000");
-		root.setAttribute("Thickness", 2);
-		root.setAttribute("Arrow", "false");
+		addAtt(QString("Shape"), Shape, &root);
+		addAtt(QString("LineColor"), "#000000", &root);//?
+		addAtt(QString("FillColor"), "#000000", &root);
+		addAtt(QString("Thickness"), "2", &root);
+		addAtt(QString("Arrow"), "false", &root);
 	}
 
 	//process the XML and send to JS
 	SendtoJS(&doc);
 }
-void Hub::fromPanelAdd(QString name)
+void Hub::ModeCHG(QString Action)
+{
+	QDomDocument doc;
+	QDomElement root = doc.createElement("MODE");
+	addAtt(QString("Action"), Action, &root);
+	doc.appendChild(root);
+}
+void Hub::AddFootage(QString name)
 {}
-void Hub::fromPanelMod(QString Target, QString Att, QString value)
-{}
-void Hub::fromWkspcAdd(QString XMLstring)
-{}
-void Hub::fromWkspcMod(QString XMLstring)
-{}
+void Hub::Modify(QString Target, QString Att, QString value)
+{
+	//deal with DB
+	//deal with Wkspc
+}
+void Hub::Modify(QString XMLstring)
+{
+	//deal with DB
+	//deal with panel?
+}
+void Hub::AddShape(QString XMLstring)
+{
+	//deal with DB
+	//deal with panel?
+}
 void Hub::SendtoJS(QDomDocument* doc)
 {
 	QString XMLstring = toQString(doc);
-//	frame->evaluateJavaScript(QString("msg_Cpp2AS(%1)").arg(QString("\'")+escape(XMLstring)+"\'"));
-	qDebug()<<"QD1:"<<XMLstring;
-	//QString str = "\'fu\" \"ck\'";
-//	XMLstring = "<MODE C= \"sda\" F=\"#232323\" B=\"cc\" />";
-	qDebug()<<"QD:"<<replace(XMLstring);
-	frame->evaluateJavaScript(QString("msg_Cpp2AS(%1)").arg(replace(XMLstring)));
-	//frame->evaluateJavaScript(QString("msg_Cpp2AS(%1)").arg(str));
+	XMLstring = replace(XMLstring);
+	qDebug()<<XMLstring;
+	frame->evaluateJavaScript(QString("msg_Cpp2AS(%1)").arg(XMLstring));
 }
 QDomDocument Hub::toXML(QString XMLstring)
 {
@@ -79,9 +91,19 @@ QString Hub::toQString(QDomDocument *doc)
 QString Hub::replace(QString source)
 {
 	QString s = source;
+
 	s.replace(QString("\""), QString("\\\""));
-	s.replace(QString("\n"), QString(""));
+	s.replace(QString("\n"), QString("\\n"));
 	s = '"' + s + '"';
+
+	//s.remove(-1, 1);
 	return s;
 }
-
+void Hub::addAtt(QString Att, QString value, QDomElement* Target)
+{
+	QDomDocument *doc = &(Target->ownerDocument());
+	QDomElement AttNode = doc->createElement(Att);
+	QDomText val = doc->createTextNode(value);
+	AttNode.appendChild(val);
+	Target->appendChild(AttNode);
+}

@@ -34,14 +34,14 @@ class Hub
 {
 public:
 	Hub(QWebView*);
-//public slots:
-	void fromToolbar(QString, QString);
-	void fromPanelAdd(QString);//name of the footage
-	void fromPanelMod(QString, QString, QString);
+	void ModeCHG(QString Action, QString Draw);
+	void ModeCHG(QString Action);
 
-	//XML string
-	void fromWkspcAdd(QString);
-	void fromWkspcMod(QString);//Include selecting
+	void AddFootage(QString name);//name of the footage
+	void AddShape(QString XMLstring);//Include selecting
+
+	void Modify(QString Target, QString Att, QString value);
+	void Modify(QString XMLstring);
 
 private:
 	void SendtoJS(QDomDocument*);
@@ -50,4 +50,5 @@ private:
 	QString toQString(QDomDocument*);
 	QWebView *view;
 	QWebFrame *frame;
+	void addAtt(QString Att, QString value, QDomElement* Target);
 };

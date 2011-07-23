@@ -33,12 +33,14 @@ class structure:
 					--------------------
 					width
 					height
+					xscale
+					yscale
 					--------------------
 					rotation
 					--------------------
 					alpha
 					bright
-					sharp(what's this,really need it)
+					sharp(what's this,really need it?)
 					--------------------
 					color1(can be fg color)
 					color2(can be bg color)

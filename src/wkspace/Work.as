@@ -4,14 +4,22 @@ package{
 	public class Work extends Sprite{
 		private var tr:TraceText; 
 		private var fsFlag:Boolean; // FULLSCREEN flag
+		private var messager:Messager;
 
 		public function Work():void{
-			fsFlag = false;
+			//set the fullscreen flag to false
 			tr = new TraceText("Init");
-			addChild(tr);
+			fsFlag = false;
 			tr.addEventListener(MouseEvent.CLICK, switchFullScreen);
-			parent.addChild(this);
-			register_func();
+			//trace for debug
+			addChild(tr);
+			//
+			messager = new Messager;
+			messager.setResponseFunc(response);
+		}
+
+		private function response(msg:XML):void{
+			tr.text = msg.toString();
 		}
 
 		private function switchFullScreen(mEvent:MouseEvent):void{
@@ -21,31 +29,6 @@ package{
 				stage.displayState = StageDisplayState.FULL_SCREEN;
 			else
 				stage.displayState = StageDisplayState.NORMAL;
-		}
-
-		private function isReady():Boolean{
-			return Boolean(ExternalInterface.call("getIsReady"));
-		}
-
-		private function tryRegister(e:TimerEvent):void{
-			if(ExternalInterface.available && isReady()){
-				ExternalInterface.addCallback("recieveMsg", recieveMsg);
-				Timer(e.target).stop();
-			}
-		}
-
-		private function recieveMsg(msg:String):void{
-			responseMsg(msg);
-		}
-
-		private function responseMsg(msg:String):void{
-			tr.text = msg;
-		}
-
-		private function register_func():void{
-			var timer_addCall:Timer = new Timer(500);
-			timer_addCall.addEventListener(TimerEvent.TIMER, tryRegister);
-			timer_addCall.start();
 		}
 	}
 }
