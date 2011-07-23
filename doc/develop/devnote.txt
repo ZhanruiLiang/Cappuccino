@@ -16,6 +16,60 @@ Devnote,2011.7.22
                 --接收带三个参数的编辑信号，通常为调整类的信息，三个参数分别为Target,Attribute和value
                 --发送完整的XML信息。是否带参以确定传输方向待定。
 
+class structure:
+
+			base class is OcObject, has following attributes:
+				name
+				startTime
+				endTime
+				page
+				//TODO: others
+
+				OcDisplayObject extends OcObject, has the following attributes:
+					--------------------
+					x
+					y
+					z(maybe "depth")
+					--------------------
+					width
+					height
+					--------------------
+					rotation
+					--------------------
+					alpha
+					bright
+					sharp(what's this,really need it)
+					--------------------
+					color1(can be fg color)
+					color2(can be bg color)
+					--------------------
+
+					some other class extends OcDisplayObject:
+						1. OcTextField, attributes:
+							fontsize
+							font
+							bold
+							italic
+							vertical
+						2. OcLine
+						x1,x2,y1,y2
+						thick
+						lineStyle
+						arrowStyle
+
+						2. OcPolygon
+							vertexNum
+							vertexes
+						3. OcContainer ( contains the imported pictures, video or other medias )
+
+				OcEffectObject extends OcObject, has the following attributes:
+					refObj (it's an array, stores the objects it reference)
+
+					other effect classes extend OcEffectObject, since they have different types of arguments:
+						1. OcEff_move
+						2. OcEff_fade (fade in/ fade out)
+						3. OcEff_colorTransform
+
 3.本项目使用XML传输和记录大部分信息，因调用方便的考虑也通过字符串来传递信息，具体传递方式上面Hub部分已经列出。
   XML的结构有tag，Attribute，且嵌套组成。
   下面列出XML信息形式的约定。其中，数字引出属性或标记名，"--"引出其可选值，后面为该类型所含内容。
@@ -45,6 +99,7 @@ Devnote,2011.7.22
                  note:以上Attribute的值
         --OBJECT
           这个标记将描述一个完整的对象。TODO
+
         --MODE
           编辑模式改变，通常给Wkspc。
           1.Action
