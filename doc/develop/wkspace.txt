@@ -1,0 +1,43 @@
+main classes:
+
+*	Messager
+
+*	Work
+
+	Workspace
+
+*	TraceText ( for debug )
+
+	Hinter
+
+	HinterManager
+
+	OcViewPort
+
+*	OcObject
+
+*	OcDisplayObject extends OcObject
+
+*	OcText extends OcDisplayObject
+
+*	OcLine extends OcDisplayObject
+
+	OcRect
+
+
+	EditTool
+
+	Tool_Text extends EditTool
+
+	Tool_Edit extends EditTool
+
+	Tool_Line extends EditTool
+	
+	Tool_Ellipse extends EditTool
+
+	Tool_Rect extends EditTool
+
+	Tool_Polygon extends EditTool
+
+	IDisplayable
+
