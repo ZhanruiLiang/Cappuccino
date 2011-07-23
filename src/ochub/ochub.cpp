@@ -14,15 +14,15 @@
 //         School:  Sun-Yat-Sen University
 // 
 // =====================================================================================
-#include "hub.h"
+#include "ochub.h"
 #include<QtCore>
 #include<QObject>
-Hub::Hub(QWebView *view)
+OcHub::OcHub(QWebView *view)
 {
 	this->view = view;
 	this->frame = view->page()->mainFrame();
 }
-void Hub::ModeCHG(QString Action, QString Shape)
+void OcHub::ModeCHG(QString Action, QString Shape)
 {
 	QDomDocument doc;
 	QDomElement root = doc.createElement("MODE");
@@ -44,62 +44,62 @@ void Hub::ModeCHG(QString Action, QString Shape)
 	//process the XML and send to JS
 	SendtoJS(&doc);
 }
-void Hub::ModeCHG(QString Action)
+void OcHub::ModeCHG(QString Action)
 {
 	QDomDocument doc;
 	QDomElement root = doc.createElement("MODE");
 	addAtt(QString("Action"), Action, &root);
 	doc.appendChild(root);
 }
-void Hub::AddFootage(QString name)
+void OcHub::AddFootage(QString name)
 {}
-void Hub::Modify(QString Target, QString Att, QString value)
+void OcHub::Modify(QString Target, QString Att, QString value)
 {
 	//deal with DB
 	//deal with Wkspc
 }
-void Hub::Modify(QString XMLstring)
+void OcHub::Modify(QString XMLstring)
 {
 	//deal with DB
 	//deal with panel?
 }
-void Hub::AddShape(QString XMLstring)
+void OcHub::AddShape(QString XMLstring)
 {
 	//deal with DB
 	//deal with panel?
 }
-void Hub::SendtoJS(QDomDocument* doc)
+void OcHub::SendtoJS(QDomDocument* doc)
 {
 	QString XMLstring = toQString(doc);
 	XMLstring = replace(XMLstring);
 	qDebug()<<XMLstring;
 	frame->evaluateJavaScript(QString("msg_Cpp2AS(%1)").arg(XMLstring));
 }
-QDomDocument Hub::toXML(QString XMLstring)
+QDomDocument OcHub::toXML(QString XMLstring)
 {
 	QDomDocument doc;
 	doc.setContent(XMLstring);
 	return doc;
 }
-QString Hub::toQString(QDomDocument *doc)
+QString OcHub::toQString(QDomDocument *doc)
 {
 	QString XMLstring;
 	QTextStream text(&XMLstring);
 	doc->save(text, 4);
 	return XMLstring;
 }
-QString Hub::replace(QString source)
+QString OcHub::replace(QString source)
 {
 	QString s = source;
 
-	s.replace(QString("\""), QString("\\\""));
-	s.replace(QString("\n"), QString("\\n"));
-	s = '"' + s + '"';
+	//s.replace(QString("\""), QString("\\\""));
+	//s.replace(QString("\n"), QString(""));
+	//s = '"' + s + '"';
 
-	//s.remove(-1, 1);
+	s.remove(-1, 1);
 	return s;
 }
-void Hub::addAtt(QString Att, QString value, QDomElement* Target)
+void OcHub::addAtt(QString Att, QString value, QDomElement* Target)
 {
 	QDomDocument *doc = &(Target->ownerDocument());
 	QDomElement AttNode = doc->createElement(Att);

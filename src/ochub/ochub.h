@@ -30,10 +30,14 @@
 #include <QtWebKit>
 #include <QString>
 
-class Hub
+class OcHub
 {
 public:
+<<<<<<< HEAD:src/hub/hub.h
 	Hub(QWebView*);
+=======
+	OcHub(QWebView*);
+>>>>>>> d540a896b596ffc672cb929e02cea50628022943:src/ochub/ochub.h
 	void ModeCHG(QString Action, QString Draw);
 	void ModeCHG(QString Action);
 
