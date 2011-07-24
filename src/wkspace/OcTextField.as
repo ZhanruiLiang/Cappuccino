@@ -11,7 +11,8 @@ package {
 			   italic:Boolean,
 			   vertical:Boolean;
 		//member
-		public function OcTextField():void{
+		public function OcTextField(name0:String=null):void{
+			super(name0);
 			fontsize = 10;
 			font = "Arial";
 			bold = false;

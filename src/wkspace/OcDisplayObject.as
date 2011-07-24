@@ -1,4 +1,4 @@
-package {
+﻿package {
 	import flash.display.*;
 	public class OcDisplayObject extends OcObject {
 		//data members
@@ -16,7 +16,8 @@ package {
 			   color2:uint;
 
 		//methods
-		public function OcDisplayObject():void{
+		public function OcDisplayObject(name0:String = null):void{
+			super(name0);
 			x = 0;
 			y = 0;
 			z = 0;

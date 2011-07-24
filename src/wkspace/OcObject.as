@@ -1,4 +1,4 @@
-package {
+﻿package {
 	public class OcObject{
 		import flash.display.*;
 		import flash.text.*;
@@ -23,7 +23,7 @@ package {
 		}
 
 		public function toXML():XML{
-			var objXML:XML = new XML();
+			var objXML:XML = <a/>;
 			objXML.setName(getQualifiedClassName(this));
 			for each( var f:String in fields){
 				objXML[f] = this[f];
@@ -36,7 +36,7 @@ package {
 				if(!hasOwnProperty(node.name()))
 					return false;
 			}
-			for each(var node:XML in objXML){
+			for each(node in objXML){
 				this[node.name()] = node[node.name()];
 			}
 			return true;

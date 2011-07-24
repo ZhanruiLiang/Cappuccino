@@ -1,12 +1,24 @@
 package {
 	public class EditTool{
-		import flash.display.*;
-		import flash.text.*;
-		import flash.utils.*;
-		import flash.events.*;
+		include "preinclude.as";
 
+		/*link to this workspace
+		   */
 		public var workspace:Workspace;
-		public function EditTool():void{
+
+		/*The targets to be created
+		  */
+		public var targets:Array;
+
+		/*The messager, to send out message 
+		   */
+		public var messager:Messager;
+
+
+		public function EditTool(workspace:Workspace = null, messager:Messager=null, targets:Array=null):void{
+			this.workspace = workspace;
+			this.messager = messager;
+			this.targets = targets;
 		}
 
 		public function onMouseDown(event:MouseEvent):void{
@@ -16,6 +28,12 @@ package {
 		public function onMouseUp(event:MouseEvent):void{
 		}
 		public function onMouseOut(event:MouseEvent):void{
+		}
+		public function onMouseClick(event:MouseEvent):void{
+		}
+		public function onMouseDClick(event:MouseEvent):void{
+		}
+		public function onMouseWheel(event:MouseEvent):void{
 		}
 	}
 }
