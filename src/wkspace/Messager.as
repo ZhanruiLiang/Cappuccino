@@ -1,5 +1,8 @@
-package{
-	include "preinclude.as";
+package {
+	import flash.utils.*;
+	import flash.events.*;
+	import flash.external.ExternalInterface;
+	import flash.system.Security;
 
 	public class Messager{
 		private var responseFunc:Function;

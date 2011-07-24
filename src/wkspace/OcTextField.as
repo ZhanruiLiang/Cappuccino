@@ -1,12 +1,15 @@
-package{
-	include "preinclude.as";
+package {
+	import flash.display.*;
+	import flash.text.*;
 
-	public class OcTextField extends OcDisPlayObject{
+	public class OcTextField extends OcDisplayObject{
 		//data
 		public var fontsize:uint,
 			   text:String,
 			   font:String,
-			   bold,italic,vertical:Boolean;
+			   bold:Boolean,
+			   italic:Boolean,
+			   vertical:Boolean;
 		//member
 		public function OcTextField():void{
 			fontsize = 10;

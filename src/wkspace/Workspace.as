@@ -1,38 +1,61 @@
-package{
-	include "preinclude.as";
+package {
+	import flash.display.*;
+	import flash.text.*;
+	import flash.utils.*;
+	import flash.events.*;
 
-	public class Workspace extends Sprite implements IDisplayable{
+	public class Workspace extends Sprite {
 		//data
 		public var objs:Array;
 
-		//member
+		//methods
+		//	constructor
 		public function Workspace():void{
+			objs = [];
 		}
 
 		public function addObj(obj:OcObject):void{
+			objs.push(obj);
+			if(obj is OcDisplayObject){
+				addChild((obj as OcDisplayObject).display());
+			}
 		}
 
 		public function delObj(objName:String):Boolean{
+			var obj:OcObject = getObjByName(objName);
+			if(! obj) return false;
+			objs.splice(objs.indexOf(obj),1);
+			return true;
 		}
 
 		public function getObjByName(objName:String):OcObject{
+			for(var i:int = 0; i < objs.length; i++)
+				if(objs[i].name == objName)
+					return objs[i];
+			return null;
 		}
 
-		//	display
+		//	update the objects' order
 		public function update():void{
-		}
-		public function display():DisplayObject{
-			return this;
+			for(var i:int = 0; i < numChildren; i++){
+				removeChildAt(i);
+			}
+			objs.sort(objDepthCompare);
+			for each(var obj:OcObject in objs){
+				if(obj is OcDisplayObject)
+					addChild(OcDisplayObject(obj).display());
+			}
+			//TODO: some objs show be hid;
 		}
 
-		private function objDepthCompare(a,b:OcObject):int{
+		private function objDepthCompare(a:OcObject,b:OcObject):int{
 			// a < b , -1
 			// b < a , 1
 			// a = b , 0
-			if(! (a is IDisplayable)) return -1;
-			else if(!(b is IDisplayable)) return 1;
+			if(! (a is OcDisplayObject)) return -1;
+			else if(!(b is OcDisplayObject)) return 1;
 			else{
-				var res:int = a.z-b.z;
+				var res:int = OcDisplayObject(a).z-OcDisplayObject(b).z;
 				if(res > 0) return  1;
 				else if(res < 0) return -1;
 				else return 0;

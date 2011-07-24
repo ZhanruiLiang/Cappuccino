@@ -1,22 +1,28 @@
-package{
-	include "preinclude.as";
+package {
+	import flash.display.*;
 
-	public class OcLine extends OcDisPlayObject{
-		public var x1,y1,x2,y2:Number,
-			   thick:Number,
-			   lineStyle,
-			   arrowStyle:String;
+	public class OcLine extends OcDisplayObject{
+		public var x1:Number,y1:Number,x2:Number,y2:Number,
+			   thickness:Number,
+			   lineStyle:uint,
+			   arrowStyle:uint;
 		//lineStyle const
-		const public var LS_NORMAL:uint = 0;
+		public const LS_NORMAL:uint = 0;
 		//arrowStyle const
-		const public var AS_NONE:uint = 0;
-		const public var AS_POINTER:uint = 1;
+		public const AS_NONE:uint = 0;
+		public const AS_POINTER:uint = 1;
 
+		//methods
+		//TODO: rearrange the x,y,z... attributes
 		public function OcLine():void{
+			fields.push("x1", "y1", "x2", "y2", "thickness", "lineStyle", "arrowStyle");
+			fields.splice(fields.indexOf("color2"),1);
+
 			x1 = y1 = x2 = y2 = 0;
-			thick = 1;
+			thickness = 1;
 			lineStyle = LS_NORMAL;
 			arrowStyle = AS_NONE;
+			_disp = new Sprite();
 		}
 /*public function lineStyle(
 	thickness:Number = NaN,
@@ -28,24 +34,28 @@ package{
 	joints:String = null,
 	miterLimit:Number = 3):void
   */
-		override function update():void{
-			with(_disp.graphics){
+		override public function update():void{
+			with(Sprite(_disp).graphics){
 				clear();
-				lineStyle(thick, color1, alpha);
+				lineStyle(thickness, color1, alpha, 
+						false, 
+						LineScaleMode.NORMAL,
+						CapsStyle.SQUARE,
+						JointStyle.BEVEL);
 				moveTo(x1, y1);
 				lineTo(x2, y2);
 			}
-			drawArrow(_disp.graphics);
+			drawArrow(Sprite(_disp).graphics);
 		}
 
 		protected function drawArrow(graphics:Graphics):void{
 			with(graphics){
-				if(arrowStyle == LS_NONE){
+				if(arrowStyle == AS_NONE){
 					//none 
-				}else if(arrowStyle == LS_POINTER){
+				}else if(arrowStyle == AS_POINTER){
 					//TODO: add a arrow shape
 				}
 			}
 		}
-	}
+	}// end of class OcLine
 }

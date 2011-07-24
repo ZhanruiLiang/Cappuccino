@@ -7,11 +7,28 @@ package{
 			tr = new TraceText("Init");
 			addChild(tr);
 
-			var str:String = "<favor> <a>fuck<c>fuckfuckfuck</c></a> <b>cckk</b> </favor>";
-			var myXML:XML = XML(str);
-			myXML.appendChild(XML("<who>raper</who>"));
+			var myXML:XML= 
+				<favor> 
+					<a>
+						<c>fuckfuckfuck</c>
+					</a>
+					<b>cckk</b>
+				</favor>;
+
+			//myXML.appendChild(XML("<who>raper</who>"));
+			myXML.who = "raper";
+			myXML.setName("fffff");
 
 			tr.text = "X:" + myXML.toString();
+
+			tr.text = "";
+			var arr:Array;
+			arr = [ 1, 5 ,2];
+			arr.sort();
+			tr.text = String(arr);
+
+			var a,b:int;
+			tr.text = typeof b;
 		}
 	}
 }
