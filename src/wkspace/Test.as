@@ -3,6 +3,9 @@ package{
 
 	public class Test extends Sprite{
 		private var tr:TraceText;
+		[Embed( source = "res.swf" )]
+			private var Res:Class;
+
 		public function Test():void{
 			tr = new TraceText("Init");
 			addChild(tr);
@@ -21,14 +24,11 @@ package{
 
 			tr.text = "X:" + myXML.toString();
 
-			tr.text = "";
-			var arr:Array;
-			arr = [ 1, 5 ,2];
-			arr.sort();
-			tr.text = String(arr);
-
-			var a,b:int;
-			tr.text = typeof b;
+			//var pic:BitmapAsset = new PicMother() as BitmapAsset;
+			//addChild(pic);
+			var mov:Sprite = new Res() as Sprite;
+			addChild(mov);
 		}
+
 	}
 }

@@ -17,6 +17,10 @@ package {
 			responseFunc = func;
 		}
 
+		public function send(msg:XML):void{
+			ExternalInterface.call("msg_AS2Cpp", msg.toXMLString());
+		}
+
 		private function isReady():Boolean{
 			return Boolean(ExternalInterface.call("getIsReady"));
 		}

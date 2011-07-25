@@ -15,7 +15,10 @@ package {
 		public var messager:Messager;
 
 
-		public function EditTool(workspace:Workspace = null, messager:Messager=null, targets:Array=null):void{
+		public function EditTool(
+				workspace:Workspace = null, 
+				messager:Messager=null, 
+				targets:Array=null):void{
 			this.workspace = workspace;
 			this.messager = messager;
 			this.targets = targets;

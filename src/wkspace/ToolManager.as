@@ -8,11 +8,11 @@ package{
 		private const eventMap:Array = 
 			[[MouseEvent.CLICK, "onMouseClick"],
 			[MouseEvent.DOUBLE_CLICK, "onMouseDClick"],
-			[MouseEvent.DOWN, "onMouseDown"],
-			[MouseEvent.MOVE, "onMouseMove"],
-			[MouseEvent.OUT, "onMouseOut"],
-			[MouseEvent.UP, "onMouseUp"],
-			[MouseEvent.WHEEL, "onMouseWheel"]];
+			[MouseEvent.MOUSE_DOWN, "onMouseDown"],
+			[MouseEvent.MOUSE_MOVE, "onMouseMove"],
+			[MouseEvent.MOUSE_OUT, "onMouseOut"],
+			[MouseEvent.MOUSE_UP, "onMouseUp"],
+			[MouseEvent.MOUSE_WHEEL, "onMouseWheel"]];
 
 		public function ToolManager():void{
 			tools = [new Tool_Text()];
@@ -23,10 +23,10 @@ package{
 			tools.push(et);
 		}
 
-		public changeToTool(et:EditTool):void{
+		public function changeToTool(et:EditTool):void{
 			try{
 				for each(var pair:String in eventMap){
-					current.workspace.removeEventListener(pair[0]);
+					currentTool.workspace.removeEventListener(pair[0],currentTool[pair[1]]);
 					if(!et[pair[1]])
 						throw Error(pair);
 					else
@@ -36,7 +36,7 @@ package{
 				et.messager = messager;
 				//TODO set targets for et
 			}
-			catch(err){
+			catch(err:Error){
 				trace(err);
 			}
 		}

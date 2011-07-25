@@ -10,6 +10,7 @@
 		private var wkspaces:Array;
 		private var currentWkspace:Workspace;
 		private var toolmgr:ToolManager;
+		private var hinterMgr:HinterManager;
 		private const fps:Number = 54;
 
 		public function Work():void{
@@ -24,12 +25,16 @@
 			messager = new Messager;
 			messager.setResponseFunc(response);
 			//workspace
+			wkspaces = [];
 			currentWkspace = new Workspace();
 			addChild(currentWkspace);
 			wkspaces.push(currentWkspace);
 			//tool manager
 			toolmgr = new ToolManager();
 			toolmgr.messager = messager;
+			//hinter manager
+			hinterMgr = new HinterManager();
+			addChild(hinterMgr);
 
 			//start main loop
 			var delta_time:Number = 1000/fps;
@@ -59,14 +64,13 @@
 		}
 
 		private function test_init1():void{
-			tr.width = 300;
-			tr.height = 400;
-			
-			var obj:OcObject = new OcObject("instance1");
-			tr.text = obj.toXML().toXMLString();
-			
-			var obj1:OcDisplayObject = new OcDisplayObject();
-			tr.text += '\n' + obj1.toXML().toXMLString();
+			addEventListener(MouseEvent.CLICK, 
+					function(e:MouseEvent):void{
+						hinterMgr.addHinter(new Square(66,66));
+					});
+			tr.width = 100;
+			tr.height = 18;
+			tr.text = "Click to add a hinter";
 		}
 
 		private function mainLoop(e:TimerEvent):void{
