@@ -1,8 +1,19 @@
-package{
+﻿package{
 	include "preinclude.as";
 
 	public class ToolManager{
+		/*link to this workspace
+		   */
+		public var workspace:Workspace;
+
+		/*The targets to be created
+		  */
+		public var targets:Array;
+
+		/* use this massager to send message
+		*/
 		public var messager:Messager;
+		
 		private var tools:Array;
 		private var currentTool:EditTool;
 		private const eventMap:Array = 
@@ -15,29 +26,49 @@ package{
 			[MouseEvent.MOUSE_WHEEL, "onMouseWheel"]];
 
 		public function ToolManager():void{
-			tools = [new Tool_Text()];
-			currentTool = tools[0];
+			workspace = null;
+			targets = [];
+			tools = [];
 		}
 
 		public function addTool(et:EditTool):void{
 			tools.push(et);
+			et.workspace = workspace;
+			et.messager = messager;
+			et.targets = targets;
 		}
 
-		public function changeToTool(et:EditTool):void{
-			try{
-				for each(var pair:String in eventMap){
-					currentTool.workspace.removeEventListener(pair[0],currentTool[pair[1]]);
-					if(!et[pair[1]])
-						throw Error(pair);
-					else
-						et.workspace.addEventListener(pair[0], et[pair[1]]);
+		public function changeToTool(toolName:String):void{
+			if(currentTool)
+				cancelTool(currentTool);
+			currentTool = null;
+			
+			var tool:EditTool;
+			for each(var t:EditTool in tools){
+				if(t.name == toolName){
+					tool = t; break;
 				}
-
-				et.messager = messager;
-				//TODO set targets for et
+				//
+				trace(t.name);
 			}
-			catch(err:Error){
-				trace(err);
+			
+			if(tool){
+				applyTool(tool);
+				currentTool = tool;
+			}			
+		}
+		private function cancelTool(tool:EditTool):void{
+			for each(var pair:Array in eventMap){
+					tool.workspace.removeEventListener(pair[0],tool[pair[1]]);
+			}
+		}
+		private function applyTool(tool:EditTool):void{
+			tool.workspace = workspace;
+			tool.targets = targets;
+			tool.messager = messager;
+			for each(var pair:Array in eventMap){
+				tool.workspace.addEventListener(pair[0], tool[pair[1]]);
+				trace("pair ",pair[0], tool[pair[1]])
 			}
 		}
 	}

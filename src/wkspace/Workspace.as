@@ -1,4 +1,4 @@
-package {
+﻿package {
 	import flash.display.*;
 	import flash.text.*;
 	import flash.utils.*;
@@ -12,6 +12,13 @@ package {
 		//	constructor
 		public function Workspace():void{
 			objs = [];
+			
+			with(graphics){
+				lineStyle(0);
+				beginFill(0x999999, 0.1);
+				drawRect(5, 5, 500, 400);
+				endFill();
+			}
 		}
 
 		public function addObj(obj:OcObject):void{

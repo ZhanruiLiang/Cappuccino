@@ -1,12 +1,11 @@
-package{
+﻿package{
 	include "preinclude.as";
 
 	/* The hinter, usage: 
 	 * 		var ht:Hinter = new Hinter(mySprite);
 	 */
 	public class Hinter extends Sprite{
-		protected var t1:Number, t2:Number, t3:Number, tNow:Number,
-				timer_loop:Timer;
+		protected var t1:Number, t2:Number, t3:Number, tNow:Number;
 		protected var delta_t:Number;
 
 		protected var _content:Sprite;
@@ -15,16 +14,19 @@ package{
 		public function Hinter(content0:Sprite = null,
 				dt:Number = 1000.0/24):void{
 			delta_t = dt;
-			content = content0;
+			_content = content0;
+			with(_content){
+				x = -width/2;
+				y = -height/2;
+			}
+			addChild(_content);
+			loop();
 
-			t1 = 700;
-			t2 = t1 + 2500;
-			t3 = t2 + 800;
+			t1 = 900;
+			t2 = t1 + 3000;
+			t3 = t2 + 500;
 
 			tNow = 0;
-			timer_loop = new Timer(delta_t);
-			timer_loop.addEventListener(TimerEvent.TIMER, func_loop);
-			timer_loop.start();
 			_stop = false;
 		}
 
@@ -52,17 +54,16 @@ package{
 				return 0;
 		}
 
-		protected function func_loop(event:TimerEvent):void{
+		public function loop():void{
 			var c:Number = func1(tNow);
-			_content.alpha = c;
-			_content.scaleX = c;
-			_content.scaleY = c;
+			alpha = c;
+			scaleX = c;
+			scaleY = c;
 
-			if(c < 0.001){
-				timer_loop.removeEventListener(TimerEvent.TIMER, func_loop);
-				timer_loop.stop();
+			if(tNow > t3){
 				_stop = true;
 			}
+			tNow += delta_t;
 		}
 
 		

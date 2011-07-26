@@ -1,4 +1,4 @@
-package {
+﻿package {
 	public class EditTool{
 		include "preinclude.as";
 
@@ -13,12 +13,16 @@ package {
 		/*The messager, to send out message 
 		   */
 		public var messager:Messager;
+		
+		public var name:String;
 
 
 		public function EditTool(
+				name:String = "EditTool",
 				workspace:Workspace = null, 
 				messager:Messager=null, 
 				targets:Array=null):void{
+			this.name = name;
 			this.workspace = workspace;
 			this.messager = messager;
 			this.targets = targets;

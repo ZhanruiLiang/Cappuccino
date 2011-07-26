@@ -1,18 +1,24 @@
-package{
+﻿package{
 	include "preinclude.as";
 
 	/* The hinter manager
 	 */
 
 	public class HinterManager extends Sprite{
-		protected var hinters:Array;
 		protected const SEP:Number = 5;
+		
+		protected var hinters:Array;
+		protected var delta_t:Number;
 
-		public function HinterManager():void{
+		public function HinterManager(dt:Number = 1000.0/24):void{
 			hinters = [];
+			delta_t = dt;
 		}
 
 		public function loop():void{
+			for each(var h:Hinter in hinters){
+				h.loop();
+			}
 			var last:Hinter = null;
 			for each(var h:Hinter in hinters){
 				if(h.stopped)

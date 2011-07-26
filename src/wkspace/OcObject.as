@@ -11,15 +11,14 @@
 		public var page:uint;
 
 		protected var fields:Array = [];
+		protected var types:Array = [];
 
 		//member
 		public function OcObject(name0:String = ""):void{
 			name = name0;
 			startTime = endTime = page = 0;
-			fields.push("name");
-			fields.push("startTime");
-			fields.push("endTime");
-			fields.push("page");
+			fields.push("name", "startTime", "endTime", "page");
+			types.push("String", "int", "int", "uint");
 		}
 
 		public function toXML():XML{
@@ -32,12 +31,23 @@
 		}
 
 		public function fromXML(objXML:XML):Boolean{
-			for each(var node:XML in objXML){
+			for each(var node:XML in objXML.children()){
+				trace(node.name());
 				if(!hasOwnProperty(node.name()))
 					return false;
 			}
-			for each(node in objXML){
-				this[node.name()] = node[node.name()];
+			for(var i:int = 0; i < fields.length; i++){
+				var v:*;
+				switch(types[i]){
+					case "int": v = int(objXML[fields[i]]); break;
+					case "uint": v = uint(objXML[fields[i]]); break;
+					case "Number": v = Number(objXML[fields[i]]); break;
+					case "Boolean": v = Boolean(objXML[fields[i]]); break;
+					case "String": v = String(objXML[fields[i]]); break;					
+				}
+				trace(fields[i],types[i]);
+				this[fields[i]] = v;
+				
 			}
 			return true;
 		}

@@ -16,7 +16,7 @@
 		public function Work():void{
 			//set the fullscreen flag to false
 			tr = new TraceText("Init");
-			
+
 			fsFlag = false;
 			//trace for debug
 			trace("aaaaa-------------------");
@@ -32,8 +32,11 @@
 			//tool manager
 			toolmgr = new ToolManager();
 			toolmgr.messager = messager;
+			toolmgr.workspace = currentWkspace;
 			//hinter manager
 			hinterMgr = new HinterManager();
+			hinterMgr.x = 100;
+			hinterMgr.y = 300;
 			addChild(hinterMgr);
 
 			//start main loop
@@ -44,38 +47,80 @@
 
 
 			//test
-			test_init1();
+			//test_init();
+			test_hinter();
 		}
 
 
 		private var line:OcLine;
+		private var tool:Tool_Text;
 		private function test_init():void{
-			line = new OcLine();
-			line.thickness = 12;
-			line.color1 = 0xFF0033;
-			line.update();
-			currentWkspace.addObj(line);
+			var myXML:XML = 
+				<OcTextField>
+  <name>text1</name>
+  <startTime>0</startTime>
+  <endTime>0</endTime>
+  <page>0</page>
+  <x>0</x>
+  <y>0</y>
+  <z>0</z>
+  <rotation>0</rotation>
+  <width>100</width>
+  <height>25</height>
+  <xscale>1</xscale>
+  <yscale>1</yscale>
+  <alpha>1</alpha>
+  <brightness>1</brightness>
+  <sharpness>1</sharpness>
+  <color1>0</color1>
+  <color2>0</color2>
+  <fontsize>10</fontsize>
+  <text>Input your contents here</text>
+  <font>Arial</font>
+  <bold>false</bold>
+  <italic>false</italic>
+  <vertical>false</vertical>
+</OcTextField>;
+			var myTarget:OcTextField = new OcTextField();
+			myTarget.fromXML(myXML);
+			
+			tool = new Tool_Text("a");
+			toolmgr.targets.push(myTarget);
+			toolmgr.addTool(tool);
+			toolmgr.changeToTool("a");
+			
+			var stxt:Sprite = new Sprite();
+			var txt:TextField = new TextField();
+			txt.width = 80;
+			txt.height = 40;
+			txt.text = "Change to text tool";
+			stxt.addChild(txt);
+			hinterMgr.addHinter(stxt);
 		}
 
 		private function test_loop():void{
-			line.x1 = line.display().mouseX;
-			line.y1 = line.display().mouseY;
-			line.update();
+			
 		}
 
 		private function test_init1():void{
+			tr.width = 200;
+			tr.height = 400;
+			//tr.text = "Click to add a hinter";
+			var t:OcTextField = new OcTextField("text1");
+			t.text = "Input your contents here";
+			tr.text = t.toXML().toXMLString();
+		}
+
+		private function test_hinter():void{
 			addEventListener(MouseEvent.CLICK, 
-					function(e:MouseEvent):void{
-						hinterMgr.addHinter(new Square(66,66));
-					});
-			tr.width = 100;
-			tr.height = 18;
-			tr.text = "Click to add a hinter";
+			  function(e:MouseEvent):void{
+			  hinterMgr.addHinter(new square());
+			  });
 		}
 
 		private function mainLoop(e:TimerEvent):void{
 			//this is the main loop
-			//test_loop();
+			hinterMgr.loop();
 		}
 
 		private function response(msg:XML):void{
