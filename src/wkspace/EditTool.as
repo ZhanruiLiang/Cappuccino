@@ -28,6 +28,7 @@
 			this.targets = targets;
 		}
 
+
 		public function onMouseDown(event:MouseEvent):void{
 		}
 		public function onMouseMove(event:MouseEvent):void{

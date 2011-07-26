@@ -47,8 +47,8 @@
 
 
 			//test
-			//test_init();
-			test_hinter();
+			test_init();
+			//test_hinter();
 		}
 
 
@@ -85,10 +85,11 @@
 			myTarget.fromXML(myXML);
 			
 			tool = new Tool_Text("a");
-			toolmgr.targets.push(myTarget);
+			toolmgr.addTarget(myTarget);
 			toolmgr.addTool(tool);
 			toolmgr.changeToTool("a");
 			
+			//pop up a hinter
 			var stxt:Sprite = new Sprite();
 			var txt:TextField = new TextField();
 			txt.width = 80;

@@ -21,6 +21,10 @@
 			types.push("String", "int", "int", "uint");
 		}
 
+		public function clone():Object {
+			return UtilFunctions.clone(this);
+		}
+
 		public function toXML():XML{
 			var objXML:XML = <a/>;
 			objXML.setName(getQualifiedClassName(this));
@@ -37,17 +41,18 @@
 					return false;
 			}
 			for(var i:int = 0; i < fields.length; i++){
+				/* //bad implementation
 				var v:*;
-				switch(types[i]){
+				   switch(types[i]){
 					case "int": v = int(objXML[fields[i]]); break;
 					case "uint": v = uint(objXML[fields[i]]); break;
 					case "Number": v = Number(objXML[fields[i]]); break;
 					case "Boolean": v = Boolean(objXML[fields[i]]); break;
 					case "String": v = String(objXML[fields[i]]); break;					
 				}
-				trace(fields[i],types[i]);
-				this[fields[i]] = v;
-				
+				*/
+				var ClassRef:Class = getDefinitionByName(types[i]) as Class;
+				this[fields[i]] = ClassRef(objXML[fields[i]]);
 			}
 			return true;
 		}

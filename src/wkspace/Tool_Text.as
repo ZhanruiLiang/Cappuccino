@@ -11,15 +11,41 @@
 		}
 
 		override public function onMouseClick(event:MouseEvent):void{
-			var target:OcTextField = OcTextField(targets[0]);
-			trace("click at ",event.localX,event.localY);
-			trace("target: ", target.toXML());
+			if(dragging) return;
+			var target:OcTextField = targets[0] as OcTextField;
 
-			target.x = event.localX;
-			target.y = event.localY;
+			p1 = workspace.globalToLocal(new Point(event.stageX, event.stageY));
+			target.x = p1.x;
+			target.y = p1.y;
+			//TODO: egg pain ..... remove this 
+			target.text = "x,y = " + target.x + ' ' + target.y;
+			//
 			target.update();
 			workspace.addObj(target);
 			//messager.send(target.toXML());
+		}
+
+
+		private var p1:Point, p2:Point,
+				dragging:Boolean = false;
+		override public function onMouseDown(event:MouseEvent):void{
+			dragging = false;
+			onMouseClick(event);
+			dragging = true;
+		}
+
+		override public function onMouseMove(event:MouseEvent):void{
+			if(dragging){
+				p2 = workspace.globalToLocal(new Point(event.stageX, event.stageY));
+				var target:OcTextField = targets[0] as OcTextField;
+				target.width = p2.x - p1.x;
+				target.height = p2.y - p1.y;
+				target.update();
+			}
+		}
+
+		override public function onMouseUp(event:MouseEvent):void{
+			dragging = false;
 		}
 	}
 }

@@ -31,6 +31,15 @@
 			tools = [];
 		}
 
+		public function clearTarget():void{
+			targets = [];
+		}
+
+		public function addTarget(target:OcObject):void{
+			//targets.push(target.clone() as OcObject);
+			targets.push(target);
+		}
+
 		public function addTool(et:EditTool):void{
 			tools.push(et);
 			et.workspace = workspace;
@@ -48,8 +57,6 @@
 				if(t.name == toolName){
 					tool = t; break;
 				}
-				//
-				trace(t.name);
 			}
 			
 			if(tool){
