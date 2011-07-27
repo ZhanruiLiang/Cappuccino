@@ -7,6 +7,7 @@
 				workspace:Workspace = null, 
 				messager:Messager=null, 
 				targets:Array=null):void{
+
 			super(name, workspace, messager, targets);
 		}
 
@@ -17,17 +18,25 @@
 			p1 = workspace.globalToLocal(new Point(event.stageX, event.stageY));
 			target.x = p1.x;
 			target.y = p1.y;
+			with(target.display() as TextField){
+				selectable = false;
+				editable = false;
+				border = true;
+			}
 			//TODO: egg pain ..... remove this 
 			target.text = "x,y = " + target.x + ' ' + target.y;
 			//
 			target.update();
 			workspace.addObj(target);
-			//messager.send(target.toXML());
+			//send the ADD msg
+			//TODO
+			// send the finish message
+			//TODO
 		}
-
 
 		private var p1:Point, p2:Point,
 				dragging:Boolean = false;
+
 		override public function onMouseDown(event:MouseEvent):void{
 			dragging = false;
 			onMouseClick(event);
@@ -41,11 +50,24 @@
 				target.width = p2.x - p1.x;
 				target.height = p2.y - p1.y;
 				target.update();
+				//send the msg
+				//TODO
 			}
 		}
 
 		override public function onMouseUp(event:MouseEvent):void{
+			if(!dragging) return;
 			dragging = false;
+
+			var target:OcTextField = targets[0] as OcTextField;
+			with(target.display() as TextField){
+				//editable = true;
+				border = false;
+			}
+			//send the ADD msg
+			//TODO
+			//send the finish msg
+			//TODO
 		}
 	}
 }

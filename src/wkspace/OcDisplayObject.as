@@ -8,31 +8,38 @@
 				  _height:Number,
 				  _xscale:Number,
 				  _yscale:Number;
-		protected var _disp:DisplayObject; // this should alloc memory derive classes 
 		public var alpha:Number,
 			   brightness:Number,
 			   sharpness:Number;
 		public var color1:uint,
 			   color2:uint;
 
-		//methods
-		public function OcDisplayObject(name0:String = null):void{
-			super(name0);
-			x = 0;
-			y = 0;
-			z = 0;
-			rotation = 0;
-			_width = 0;
-			_height = 0;
-			_xscale = 1;
-			_yscale = 1;
-			alpha = 1;
-			brightness = 1;
-			sharpness = 1;
-			color1 = color2 = 0x000000;
+		/*
+		   attention, fromXML() should be overloaded
+		   */
+		protected var _disp:DisplayObject; // this should alloc memory by derive classes 
 
+		//methods
+		public function OcDisplayObject(objXML:XML = null):void{
 			fields.push("x", "y", "z", "rotation", "width", "height", "xscale", "yscale", "alpha", "brightness", "sharpness", "color1", "color2");
 			types.push("Number","Number","Number","Number","Number","Number","Number","Number","Number","Number","Number","uint","uint");
+
+			if(objXML){
+				fromXML(objXML);
+			}else{
+				x = 0;
+				y = 0;
+				z = 0;
+				rotation = 0;
+				_width = 0;
+				_height = 0;
+				_xscale = 1;
+				_yscale = 1;
+				alpha = 1;
+				brightness = 1;
+				sharpness = 1;
+				color1 = color2 = 0x000000;
+			}
 		}
 
 		public function update():void{

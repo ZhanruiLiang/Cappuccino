@@ -1,4 +1,4 @@
-package{
+﻿package{
 	include "preinclude.as";
 
 	public class Tracer{
@@ -17,7 +17,7 @@ package{
 
 		public static function trace(x:Object){
 			if(tr)
-				tr.text += String(x);
+				tr.appendText(String(x));
 		}
 
 		public static function clear():void{

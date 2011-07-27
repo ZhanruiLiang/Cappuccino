@@ -32,7 +32,7 @@ main classes:
 
 	Tool_Edit extends EditTool
 
-	Tool_Line extends EditTool
+*	Tool_Line extends EditTool
 	
 	Tool_Ellipse extends EditTool
 

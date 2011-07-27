@@ -33,6 +33,7 @@
 
 		public function clearTarget():void{
 			targets = [];
+			if(currentTool) currentTool.targets = targets;
 		}
 
 		public function addTarget(target:OcObject):void{

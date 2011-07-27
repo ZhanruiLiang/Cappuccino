@@ -11,18 +11,23 @@
 			   italic:Boolean,
 			   vertical:Boolean;
 		//member
-		public function OcTextField(name0:String=null):void{
-			super(name0);
+		public function OcTextField(objXML:XML = null):void{
 			fields.push("fontsize", "text", "font", "bold", "italic", "vertical");
 			types.push("uint", "String", "String", "Boolean", "Boolean", "Boolean");
-			fontsize = 10;
-			font = "Arial";
-			text = "";
-			bold = false;
-			italic = false;
-			vertical = false;
-			_disp = new TextField();
-			(_disp as TextField).border = true; // TODO: remove this
+
+			if(objXML){
+				fromXML(objXML);
+				_disp = new TextField();
+				update();
+			}else{
+				fontsize = 10;
+				font = "Arial";
+				text = "";
+				bold = false;
+				italic = false;
+				vertical = false;
+				_disp = new TextField();
+			}
 		}
 
 		override public function update():void{

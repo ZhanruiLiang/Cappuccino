@@ -35,6 +35,16 @@
 			this.targets = targets;
 		}
 
+		protected function reallyMouseOut(event:MouseEvent):Boolean{
+			var p1:Point = workspace.globalToLocal(new Point(event.stageX, event.stageY));
+			var len:Number = 3;
+			if(p1.x < workspace.x+len || p1.y < workspace.y +len 
+					|| p1.x > workspace.x + workspace.width - len
+					|| p1.y > workspace.y + workspace.height - len ) 
+				return true;
+			else
+				return false;
+		}
 
 		public function onMouseDown(event:MouseEvent):void{
 		}
@@ -43,6 +53,8 @@
 		public function onMouseUp(event:MouseEvent):void{
 		}
 		public function onMouseOut(event:MouseEvent):void{
+			if(reallyMouseOut(event))
+				onMouseUp(event);
 		}
 		public function onMouseClick(event:MouseEvent):void{
 		}

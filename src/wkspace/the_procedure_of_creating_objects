@@ -18,7 +18,7 @@ Edit a object will need:
 		Tool response for some mouse and keyboard events, on each event :
 			it adjust the attributes of the targets it controls;
 			send a message(maybe slow) to the Qt program telling current attributes of the targets.
-			When the creating procedure finished, it send a message to Qt telling <ADD> or <MODIFY>. 
+			When the creating procedure finished, it send a message to Qt telling <ADD> or <MODIFY>, then send <FINISH> 
 			Then Qt sends a message to ask the ToolManager to :
 				1. clear the targets array 
 				2. initialize targets.

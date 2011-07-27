@@ -7,16 +7,39 @@
 	public class Workspace extends Sprite {
 		//data
 		public var objs:Array;
+		public var left:Number, right:Number, bottom:Number, top:Number;
 
 		//methods
 		//	constructor
 		public function Workspace():void{
 			objs = [];
 			
+			var width0:Number = 550;
+			var height0:Number = 400;
+			var blurX:Number, blurY:Number;
+			
+			blurX = 4;
+			blurY = 3;
+			
+			left = (Work.outerWidth- width0)/2;
+			right = left + width0;
+			top = (Work.outerHeight- height0)/2;
+			bottom = top + height0;
+			
 			with(graphics){
-				lineStyle(0);
-				beginFill(0x999999, 0.1);
-				drawRect(5, 5, 500, 400);
+				beginFill(0xFFFFFF, 0);
+				drawRect(0, 0, Work.outerWidth, Work.outerHeight);
+				endFill();
+
+				beginFill(0x9c9c9c, 0.5);
+				drawRoundRect(left-blurX, top-blurY,
+						width0 + 2 * blurX,
+						height0 + 2 * blurY,
+						blurX, blurY);
+				endFill();
+
+				beginFill(0xEEEEEE, 1);
+				drawRect(left, top, width0, height0);
 				endFill();
 			}
 		}

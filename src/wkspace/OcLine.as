@@ -1,4 +1,4 @@
-package {
+﻿package {
 	import flash.display.*;
 
 	public class OcLine extends OcDisplayObject{
@@ -14,26 +14,40 @@ package {
 
 		//methods
 		//TODO: rearrange the x,y,z... attributes
-		public function OcLine():void{
+		public function OcLine(objXML:XML = null):void{
 			fields.push("x1", "y1", "x2", "y2", "thickness", "lineStyle", "arrowStyle");
-			fields.splice(fields.indexOf("color2"),1);
+			types.push("Number", "Number", "Number", "Number", "Number", "uint", "uint");
+			var pos:int = fields.indexOf("color2");
+			fields.splice(pos,1);
+			types.splice(pos,1);
 
-			x1 = y1 = x2 = y2 = 0;
-			thickness = 1;
-			lineStyle = LS_NORMAL;
-			arrowStyle = AS_NONE;
-			_disp = new Sprite();
+			if(!objXML){
+				x1 = y1 = x2 = y2 = 0;
+				thickness = 1;
+				lineStyle = LS_NORMAL;
+				arrowStyle = AS_NONE;
+				_disp = new Sprite();
+				with(_disp){
+					x = 0; y = 0;
+				}
+			}
+			else{
+				fromXML(objXML);
+				_disp = new Sprite();
+				update();
+			}
 		}
-/*public function lineStyle(
-	thickness:Number = NaN,
-	color:uint = 0,
-	alpha:Number = 1.0,
-	pixelHinting:Boolean = false, 
-	scaleMode:String = "normal", 
-	caps:String = null, 
-	joints:String = null,
-	miterLimit:Number = 3):void
-  */
+
+		/*public function lineStyle(
+thickness:Number = NaN,
+color:uint = 0,
+alpha:Number = 1.0,
+pixelHinting:Boolean = false, 
+scaleMode:String = "normal", 
+caps:String = null, 
+joints:String = null,
+miterLimit:Number = 3):void
+		 */
 		override public function update():void{
 			with(Sprite(_disp).graphics){
 				clear();
@@ -45,14 +59,13 @@ package {
 				moveTo(x1, y1);
 				lineTo(x2, y2);
 			}
-			drawArrow(Sprite(_disp).graphics);
+			if(arrowStyle != AS_NONE)
+				drawArrow(Sprite(_disp).graphics);
 		}
 
 		protected function drawArrow(graphics:Graphics):void{
 			with(graphics){
-				if(arrowStyle == AS_NONE){
-					//none 
-				}else if(arrowStyle == AS_POINTER){
+				if(arrowStyle == AS_POINTER){
 					//TODO: add a arrow shape
 				}
 			}
