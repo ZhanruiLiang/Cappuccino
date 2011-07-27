@@ -8,9 +8,9 @@ main classes:
 
 *	TraceText ( for debug )
 
-	Hinter
+*	Hinter
 
-	HinterManager
+*	HinterManager
 
 	OcViewPort
 
@@ -26,8 +26,9 @@ main classes:
 
 
 *	EditTool
+	the EditTools only modify Objects
 
-	Tool_Text extends EditTool
+*	Tool_Text extends EditTool
 
 	Tool_Edit extends EditTool
 

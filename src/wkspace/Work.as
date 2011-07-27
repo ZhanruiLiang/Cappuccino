@@ -2,9 +2,6 @@
 	include "preinclude.as";
 
 	public class Work extends Sprite{
-		//tr just for debug 
-		private var tr:TraceText; 
-
 		private var fsFlag:Boolean; // FULLSCREEN flag
 		private var messager:Messager;
 		private var wkspaces:Array;
@@ -15,12 +12,10 @@
 
 		public function Work():void{
 			//set the fullscreen flag to false
-			tr = new TraceText("Init");
 
 			fsFlag = false;
 			//trace for debug
-			trace("aaaaa-------------------");
-			addChild(tr);
+			addChild(Tracer.init());
 			//
 			messager = new Messager;
 			messager.setResponseFunc(response);
@@ -85,11 +80,10 @@
 			myTarget.fromXML(myXML);
 			
 			tool = new Tool_Text("a");
-			toolmgr.addTarget(myTarget);
+			toolmgr.targets.push(myTarget);
 			toolmgr.addTool(tool);
 			toolmgr.changeToTool("a");
 			
-			//pop up a hinter
 			var stxt:Sprite = new Sprite();
 			var txt:TextField = new TextField();
 			txt.width = 80;
@@ -104,20 +98,18 @@
 		}
 
 		private function test_init1():void{
-			tr.width = 200;
-			tr.height = 400;
-			//tr.text = "Click to add a hinter";
 			var t:OcTextField = new OcTextField("text1");
 			t.text = "Input your contents here";
-			tr.text = t.toXML().toXMLString();
 		}
 
+		/*
 		private function test_hinter():void{
 			addEventListener(MouseEvent.CLICK, 
 			  function(e:MouseEvent):void{
 			  hinterMgr.addHinter(new square());
 			  });
 		}
+		*/
 
 		private function mainLoop(e:TimerEvent):void{
 			//this is the main loop
@@ -125,12 +117,11 @@
 		}
 
 		private function response(msg:XML):void{
-			tr.text = msg.toString();
+			Tracer.tr.text = msg.toString();
 		}
 
 		private function switchFullScreen(mEvent:MouseEvent):void{
 			fsFlag = !fsFlag;
-			tr.text = String(fsFlag);
 			if(fsFlag)
 				stage.displayState = StageDisplayState.FULL_SCREEN;
 			else

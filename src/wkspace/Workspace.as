@@ -49,10 +49,12 @@
 			}
 			objs.sort(objDepthCompare);
 			for each(var obj:OcObject in objs){
-				if(obj is OcDisplayObject)
+				if(obj is OcDisplayObject){
+					OcDisplayObject(obj).update();
 					addChild(OcDisplayObject(obj).display());
+				}
 			}
-			//TODO: some objs show be hid;
+			//TODO: some objs should be hid;
 		}
 
 		private function objDepthCompare(a:OcObject,b:OcObject):int{
