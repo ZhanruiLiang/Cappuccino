@@ -49,7 +49,7 @@
 
 			//test
 			test_tools_init();
-			test_response();
+			//test_response();
 			//test_hinter();
 		}
 
